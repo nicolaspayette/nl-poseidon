@@ -3,6 +3,11 @@ library(here)
 library(showtext)
 showtext_auto()
 
+font_add(
+  family = "Foundry Sterling",
+  regular = fs::path_home(".local", "share", "fonts", "FoundrySterling-Book.otf")
+)
+
 p <- 1
 t <- 1
 r <- 0.9
@@ -15,8 +20,8 @@ while (p < 5000) {
 }
 
 ggplot(tibble(x = 1:32, y = y), aes(x, y)) +
-  geom_line(size = 1.5, alpha = 0.75, color = rgb(0,0.33,0.71)) +
-  theme_minimal(base_family = "FoundrySterling") +
+  geom_line(size = 1.5, alpha = 0.75, color = "#002147") +
+  theme_minimal(base_family = "Foundry Sterling") +
   labs(
     y = "Biomass",
     x = "Time"

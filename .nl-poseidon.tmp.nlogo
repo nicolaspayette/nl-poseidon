@@ -88,8 +88,8 @@ to pick-destination ; fisher procedure
     set trip-destination [ one-of fishable-patches in-radius r ] of favourite-destination
   ] [
     let other-fisher one-of other fishers
-    let their-profits [ profits-at-favourite-destination ] of other-fisher
-    ifelse profits-at-favourite-destination >= their-profits [
+
+    ifelse profits-at-favourite-destination >= [ profits-at-favourite-destination ] of other-fisher [
       ; exploit:
       set trip-destination favourite-destination
     ] [
