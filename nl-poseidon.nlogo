@@ -140,24 +140,34 @@ end
 to experiment [ years ]
   set min-mpa-x max-pxcor
   set max-mpa-x 0
+  set min-mpa-y min-pycor
+  set max-mpa-y max-pycor
   setup
   repeat years * 365 * 24 [ go ]
   print word "no MPA: " mean [ bank-balance ] of fishers
 
   set min-mpa-x min-pxcor
   set max-mpa-x 0
+  set min-mpa-y min-pycor
+  set max-mpa-y max-pycor
   setup
   repeat years * 365 * 24 [ go ]
   print word "half MPA: " mean [ bank-balance ] of fishers
 
+  load-best
+  setup
+  repeat years * 365 * 24 [ go ]
+  print word "best MPA: " mean [ bank-balance ] of fishers
+
   set min-mpa-x min-pxcor
   set min-mpa-x max-pxcor
+  set min-mpa-y min-pycor
+  set max-mpa-y max-pycor
   setup
   repeat years * 365 * 24 [ go ]
   print word "full MPA: " mean [ bank-balance ] of fishers
 
 end
-
 
 to reset-parameters
   set number-of-fishers 25
@@ -166,7 +176,7 @@ to reset-parameters
   set diffusion-rate 0.002
   set exploration-probability 0.2
   set exploration-radius 2
-  set price-of-fish 115
+  set price-of-fish 80
   set hourly-costs 50
   set speed 0.5
   set catchability 0.2
@@ -177,14 +187,25 @@ to reset-parameters
 end
 
 to load-best
-  let rows csv:from-file "mySearchOutput.finalCheckedBests.csv"
+  let rows csv:from-file "eei_params.finalCheckedBests.csv"
   let headers item 0 rows
-  let data item 1 rows
+  let data first sort-by [ [r1 r2] -> last r1 > last r2 ] but-first rows
+
   foreach range length headers [ i ->
     if last item i headers = "*" [
       run (word "set " but-last item i headers " " item i data)
     ]
   ]
+end
+
+to-report expected-mean-balance [ n ]
+  let balances []
+  repeat n [
+    setup
+    repeat 365 * 24 [ go ]
+    set balances lput mean [ bank-balance ] of fishers balances
+  ]
+  report mean balances
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -271,7 +292,7 @@ exploration-probability
 0
 1
 0.2
-0.1
+0.01
 1
 NIL
 HORIZONTAL
@@ -285,7 +306,7 @@ price-of-fish
 price-of-fish
 0
 500
-115.0
+80.0
 1
 1
 £/T
@@ -415,7 +436,7 @@ exploration-radius
 0
 world-width
 2.0
-1
+0.01
 1
 NIL
 HORIZONTAL
@@ -467,7 +488,7 @@ SLIDER
 235
 300
 445
-334
+333
 min-mpa-x
 min-mpa-x
 min-pxcor
@@ -482,7 +503,7 @@ SLIDER
 235
 340
 445
-374
+373
 max-mpa-x
 max-mpa-x
 min-pxcor
@@ -497,7 +518,7 @@ SLIDER
 235
 380
 445
-414
+413
 min-mpa-y
 min-mpa-y
 min-pycor
@@ -512,7 +533,7 @@ SLIDER
 235
 420
 445
-454
+453
 max-mpa-y
 max-mpa-y
 min-pycor
@@ -538,7 +559,7 @@ NIL
 NIL
 NIL
 NIL
-1
+0
 
 BUTTON
 235

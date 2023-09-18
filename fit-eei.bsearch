@@ -7,21 +7,19 @@
         <modelSetupCommands>setup</modelSetupCommands>
         <modelStepCommands>go</modelStepCommands>
         <modelStopCondition/>
-        <modelStepLimit>35040</modelStepLimit>
-        <modelMetricReporter>mean [bank-balance] of fishers</modelMetricReporter>
+        <modelStepLimit>8760</modelStepLimit>
+        <modelMetricReporter>(775000 - mean [bank-balance] of fishers) ^ 2</modelMetricReporter>
         <modelMeasureIf>true</modelMeasureIf>
     </modelInfo>
     <fitnessInfo>
-        <fitnessMinimized>false</fitnessMinimized>
+        <fitnessMinimized>true</fitnessMinimized>
         <fitnessCollecting>AT_FINAL_STEP</fitnessCollecting>
-        <fitnessSamplingReplications>2</fitnessSamplingReplications>
+        <fitnessSamplingReplications>10</fitnessSamplingReplications>
         <fitnessCombineReplications>MEAN</fitnessCombineReplications>
     </fitnessInfo>
     <searchSpace>
-        <paramSpec>["min-mpa-x" [ -5 1 5 ] ]</paramSpec>
-        <paramSpec>["max-mpa-x" [ -5 1 5 ] ]</paramSpec>
-        <paramSpec>["min-mpa-y" [ -5 1 5 ] ]</paramSpec>
-        <paramSpec>["max-mpa-y" [ -5 1 5 ] ]</paramSpec>
+        <paramSpec>["exploration-probability" [0 0.01 1]]</paramSpec>
+        <paramSpec>["exploration-radius" 10.93]</paramSpec>
     </searchSpace>
     <searchMethod type="StandardGA">
         <searchMethodParameter name="mutation-rate" value="0.03"/>
@@ -33,5 +31,5 @@
     <chromosomeRepresentation type="GrayBinaryChromosome"/>
     <caching>true</caching>
     <evaluationLimit>1000</evaluationLimit>
-    <bestCheckingNumReplications>5</bestCheckingNumReplications>
+    <bestCheckingNumReplications>20</bestCheckingNumReplications>
 </search>
