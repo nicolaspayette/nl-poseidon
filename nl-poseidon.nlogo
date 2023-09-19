@@ -48,7 +48,7 @@ to setup-mpa
     pycor <= max-mpa-y and
     not any? ports-here
   ] [
-    sprout-xs 1 [ set color cyan ]
+    sprout-xs 1 [ set color [0 0 0 50] ]
   ]
   set fishable-patches fishable-patches with [ not any? xs-here ]
 end
