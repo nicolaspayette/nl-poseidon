@@ -154,7 +154,7 @@ to experiment [ years ]
   repeat years * 365 * 24 [ go ]
   print word "half MPA: " mean [ bank-balance ] of fishers
 
-  load-best "fit-eei"
+  load-best "mySearchOutput"
   setup
   repeat years * 365 * 24 [ go ]
   print word "best MPA: " mean [ bank-balance ] of fishers
