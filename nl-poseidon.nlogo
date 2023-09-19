@@ -189,13 +189,18 @@ end
 to load-best [ prefix ]
   let rows csv:from-file word prefix ".finalCheckedBests.csv"
   let headers item 0 rows
-  let data first sort-by [ [r1 r2] -> last r1 > last r2 ] but-first rows
+  let data first sort-by [ [r1 r2] ->
+    last r1 > last r2
+  ] but-first rows
   foreach range length headers [ i ->
     if last item i headers = "*" [
-      run (word "set " but-last item i headers " " item i data)
+      let param but-last item i headers
+      let value precision item i data 3
+      run (word "set " param " " value)
     ]
   ]
 end
+
 
 to-report expected-mean-balance [ n ]
   let balances []
@@ -290,7 +295,7 @@ exploration-probability
 exploration-probability
 0
 1
-0.2
+0.03
 0.01
 1
 NIL
@@ -434,7 +439,7 @@ exploration-radius
 exploration-radius
 0
 world-width
-2.0
+10.93
 0.01
 1
 NIL
@@ -970,43 +975,97 @@ NetLogo 6.3.0
 @#$#@#$#@
 @#$#@#$#@
 <experiments>
-  <experiment name="experiment" repetitions="10" sequentialRunOrder="false" runMetricsEveryStep="true">
+  <experiment name="exploration-prob" repetitions="5" runMetricsEveryStep="false">
     <setup>setup</setup>
     <go>go</go>
-    <timeLimit steps="18250"/>
+    <timeLimit steps="8760"/>
     <metric>mean [ bank-balance ] of fishers</metric>
-    <metric>mean [ biomass ] of patches</metric>
+    <enumeratedValueSet variable="min-mpa-x">
+      <value value="5"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="exploration-probability" first="0.01" step="0.01" last="1"/>
+    <enumeratedValueSet variable="number-of-fishers">
+      <value value="25"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="hourly-costs">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="min-mpa-y">
+      <value value="-5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="diffusion-rate">
+      <value value="0.002"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="growth-rate">
+      <value value="0.1"/>
+    </enumeratedValueSet>
     <enumeratedValueSet variable="price-of-fish">
-      <value value="1000"/>
+      <value value="80"/>
     </enumeratedValueSet>
-    <steppedValueSet variable="mpa-border" first="0" step="1" last="9"/>
+    <enumeratedValueSet variable="max-mpa-x">
+      <value value="0"/>
+    </enumeratedValueSet>
     <enumeratedValueSet variable="carrying-capacity">
-      <value value="5000"/>
+      <value value="4000"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="exploration-probability">
-      <value value="0.2"/>
+    <enumeratedValueSet variable="max-mpa-y">
+      <value value="5"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="catchability">
-      <value value="0.05"/>
+      <value value="0.2"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="speed">
       <value value="0.5"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="number-of-fishers">
-      <value value="1000"/>
+    <enumeratedValueSet variable="exploration-radius">
+      <value value="10.93"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="daily-costs">
-      <value value="100"/>
+  </experiment>
+  <experiment name="exploration-radius" repetitions="5" runMetricsEveryStep="false">
+    <setup>setup</setup>
+    <go>go</go>
+    <timeLimit steps="8760"/>
+    <metric>mean [ bank-balance ] of fishers</metric>
+    <enumeratedValueSet variable="min-mpa-x">
+      <value value="5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="exploration-probability">
+      <value value="0.03"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="number-of-fishers">
+      <value value="25"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="hourly-costs">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="min-mpa-y">
+      <value value="-5"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="diffusion-rate">
-      <value value="0.001"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="exploration-radius">
-      <value value="1"/>
+      <value value="0.002"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="growth-rate">
-      <value value="0.9"/>
+      <value value="0.1"/>
     </enumeratedValueSet>
+    <enumeratedValueSet variable="price-of-fish">
+      <value value="80"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="max-mpa-x">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="carrying-capacity">
+      <value value="4000"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="max-mpa-y">
+      <value value="5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="catchability">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="speed">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="exploration-radius" first="1" step="0.1" last="11"/>
   </experiment>
 </experiments>
 @#$#@#$#@

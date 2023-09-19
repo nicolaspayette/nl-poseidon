@@ -14,22 +14,19 @@
     <fitnessInfo>
         <fitnessMinimized>true</fitnessMinimized>
         <fitnessCollecting>AT_FINAL_STEP</fitnessCollecting>
-        <fitnessSamplingReplications>10</fitnessSamplingReplications>
+        <fitnessSamplingReplications>5</fitnessSamplingReplications>
         <fitnessCombineReplications>MEAN</fitnessCombineReplications>
     </fitnessInfo>
     <searchSpace>
-        <paramSpec>["exploration-probability" [0 0.01 1]]</paramSpec>
-        <paramSpec>["exploration-radius" 10.93]</paramSpec>
+        <paramSpec>["exploration-probability" [0 "C" 1]]</paramSpec>
+        <paramSpec>["exploration-radius" [1 "C" 11]]</paramSpec>
     </searchSpace>
-    <searchMethod type="StandardGA">
-        <searchMethodParameter name="mutation-rate" value="0.03"/>
-        <searchMethodParameter name="population-size" value="50"/>
-        <searchMethodParameter name="crossover-rate" value="0.7"/>
-        <searchMethodParameter name="population-model" value="generational"/>
-        <searchMethodParameter name="tournament-size" value="3"/>
+    <searchMethod type="MutationHillClimber">
+        <searchMethodParameter name="mutation-rate" value="0.05"/>
+        <searchMethodParameter name="restart-after-stall-count" value="0"/>
     </searchMethod>
     <chromosomeRepresentation type="GrayBinaryChromosome"/>
     <caching>true</caching>
-    <evaluationLimit>1000</evaluationLimit>
-    <bestCheckingNumReplications>20</bestCheckingNumReplications>
+    <evaluationLimit>300</evaluationLimit>
+    <bestCheckingNumReplications>10</bestCheckingNumReplications>
 </search>
