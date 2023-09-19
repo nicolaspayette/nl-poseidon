@@ -154,7 +154,7 @@ to experiment [ years ]
   repeat years * 365 * 24 [ go ]
   print word "half MPA: " mean [ bank-balance ] of fishers
 
-  load-best
+  load-best "fit-eei"
   setup
   repeat years * 365 * 24 [ go ]
   print word "best MPA: " mean [ bank-balance ] of fishers
@@ -186,11 +186,10 @@ to reset-parameters
   set max-mpa-y max-pycor
 end
 
-to load-best
-  let rows csv:from-file "eei_params.finalCheckedBests.csv"
+to load-best [ prefix ]
+  let rows csv:from-file word prefix ".finalCheckedBests.csv"
   let headers item 0 rows
   let data first sort-by [ [r1 r2] -> last r1 > last r2 ] but-first rows
-
   foreach range length headers [ i ->
     if last item i headers = "*" [
       run (word "set " but-last item i headers " " item i data)

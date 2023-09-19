@@ -210,6 +210,11 @@
 \end{frame}
 
 \begin{frame}[fragile=singleslide]{Get the model skeleton from GitHub}
+  \Large
+  \centering
+  \vfill
+  \url{https://github.com/nicolaspayette/mini-poseidon}
+  \vfill
 \end{frame}
 
 \begin{frame}[fragile=singleslide]\frametitle{Recoloring patches}
@@ -403,5 +408,59 @@ end
     \end{minted}
   %\end{adjustbox}
 \end{frame}
+
+\begin{frame}{Scenario}
+  \vfill
+  We have observed the real-world fishery for one year.
+  \vfill
+  Fishers ended up with a mean bank balance of £775,000.
+  \vfill
+  We want to:
+  \vfill
+  \begin{itemize}
+    \item Use this information to estimate the EEI algorithm parameters.
+    \vfill
+    \item Simulate the fishery for three more years under the ``business as usual'' scenario.
+    \vfill
+    \item Figure out the best location for an MPA.
+  \end{itemize}
+  \vfill
+\end{frame}
+
+\begin{frame}{Estimating EEI parameters}
+    
+
+
+\end{frame}
+
+
+\begin{frame}[fragile=singleslide]{Loading BehaviorSearch results automatically}
+  \begin{adjustbox}{max height=0.8\textheight, max width = \linewidth}
+    \begin{minted}[highlightlines=16-20]{nlogo}  
+to load-best [ prefix ]
+  let rows csv:from-file word prefix ".finalCheckedBests.csv"
+  let headers item 0 rows
+  let data first sort-by [ [r1 r2] -> last r1 > last r2 ] but-first rows
+  foreach range length headers [ i ->
+    if last item i headers = "*" [
+      run (word "set " but-last item i headers " " item i data)
+    ]
+  ]
+end
+    \end{minted}
+  \end{adjustbox}
+\end{frame}
+
+\begin{frame}{Not looking good for the fishery...}
+  \includegraphics[width=0.49\linewidth]{images/business-as-usual-balance.png}
+  \hfill
+  \includegraphics[width=0.49\linewidth]{images/business-as-usual-biomass.png}
+\end{frame}
+
+\begin{frame}{Searching for the optimal MPA}
+  
+\end{frame}
+
+
 
 \end{document}
