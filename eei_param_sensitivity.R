@@ -54,3 +54,40 @@ df_radius %>%
   )
 
 ggsave(here("slides_behave", "images", "exploration_radius.pdf"), width = 4, height = 3)
+
+df_experiment <-
+  here("experiment.csv") %>%
+  read_csv() %>%
+  group_by(experiment, ticks) %>%
+  summarise(
+    balance = mean(mean_bank_balance_of_fishers),
+    biomass = mean(biomass)
+  )
+
+df_experiment %>%
+  ggplot(aes(ticks, balance, colour = experiment, fill = experiment)) +
+  theme_minimal(base_family = "Foundry Sterling") +
+  geom_line(linewidth = 1, alpha = 0.75) +
+  scale_y_continuous(labels = label_number(scale_cut = cut_short_scale())) +
+  scale_colour_brewer(palette = "Set1") +
+  theme(legend.position = "bottom") +
+  labs(
+    title = "Mean bank balance over four years",
+    colour = NULL
+  )
+
+ggsave(here("slides_behave", "images", "experiment_balance.pdf"), width = 4, height = 3)
+
+df_experiment %>%
+  ggplot(aes(ticks, biomass, colour = experiment)) +
+  theme_minimal(base_family = "Foundry Sterling") +
+  geom_line(linewidth = 1, alpha = 0.75) +
+  scale_y_continuous(labels = label_number(scale_cut = cut_short_scale())) +
+  scale_colour_brewer(palette = "Set1") +
+  theme(legend.position = "bottom") +
+  labs(
+    title = "Mean bank balance over four years",
+    colour = NULL
+  )
+
+ggsave(here("slides_behave", "images", "experiment_biomass.pdf"), width = 4, height = 3)

@@ -71,7 +71,7 @@ end
 to update-biology
   diffuse biomass diffusion-rate
   recolor-patches
-  if ticks mod 365 = 0 [
+  if ticks mod (14 * 24) = 0 [
     ask patches [
       set biomass biomass + (
         biomass * growth-rate *
@@ -138,35 +138,46 @@ to recolor-patches
 end
 
 to experiment [ years ]
-  set min-mpa-x max-pxcor
-  set max-mpa-x 0
-  set min-mpa-y min-pycor
-  set max-mpa-y max-pycor
-  setup
-  repeat years * 365 * 24 [ go ]
-  print word "no MPA: " mean [ bank-balance ] of fishers
+  if file-exists? "experiment.csv" [ file-delete "experiment.csv" ]
+  file-open "experiment.csv"
+  file-print csv:to-row (list "experiment" "ticks" "mean_bank_balance_of_fishers" "biomass")
+  repeat 10 [
+    set min-mpa-x max-pxcor
+    set max-mpa-x 0
+    set min-mpa-y min-pycor
+    set max-mpa-y max-pycor
+    run-experiment years "no_mpa"
 
-  set min-mpa-x min-pxcor
-  set max-mpa-x 0
-  set min-mpa-y min-pycor
-  set max-mpa-y max-pycor
-  setup
-  repeat years * 365 * 24 [ go ]
-  print word "half MPA: " mean [ bank-balance ] of fishers
+    set min-mpa-x min-pxcor
+    set max-mpa-x 0
+    set min-mpa-y min-pycor
+    set max-mpa-y max-pycor
+    run-experiment years "half_mpa"
 
-  load-best "mySearchOutput"
-  setup
-  repeat years * 365 * 24 [ go ]
-  print word "best MPA: " mean [ bank-balance ] of fishers
+    load-best "mySearchOutput"
+    run-experiment years "best_mpa"
 
-  set min-mpa-x min-pxcor
-  set min-mpa-x max-pxcor
-  set min-mpa-y min-pycor
-  set max-mpa-y max-pycor
-  setup
-  repeat years * 365 * 24 [ go ]
-  print word "full MPA: " mean [ bank-balance ] of fishers
+    set min-mpa-x min-pxcor
+    set max-mpa-x max-pxcor
+    set min-mpa-y min-pycor
+    set max-mpa-y max-pycor
+    run-experiment years "full_mpa"
+  ]
+  file-close
 
+end
+
+to run-experiment [ years name ]
+  setup
+  repeat years * 365 * 24 [
+    go
+    file-print csv:to-row (list
+      name
+      ticks
+      mean [ bank-balance ] of fishers
+      sum [ biomass ] of patches
+    )
+  ]
 end
 
 to reset-parameters
