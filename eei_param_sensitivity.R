@@ -62,10 +62,11 @@ df_experiment <-
   summarise(
     balance = mean(mean_bank_balance_of_fishers),
     biomass = mean(biomass)
-  )
+  ) %>%
+  mutate(year = ticks  / (365 * 24))
 
 df_experiment %>%
-  ggplot(aes(ticks, balance, colour = experiment, fill = experiment)) +
+  ggplot(aes(year, balance, colour = experiment, fill = experiment)) +
   theme_minimal(base_family = "Foundry Sterling") +
   geom_line(linewidth = 1, alpha = 0.75) +
   scale_y_continuous(labels = label_number(scale_cut = cut_short_scale())) +
@@ -79,14 +80,14 @@ df_experiment %>%
 ggsave(here("slides_behave", "images", "experiment_balance.pdf"), width = 4, height = 3)
 
 df_experiment %>%
-  ggplot(aes(ticks, biomass, colour = experiment)) +
+  ggplot(aes(year, biomass, colour = experiment)) +
   theme_minimal(base_family = "Foundry Sterling") +
   geom_line(linewidth = 1, alpha = 0.75) +
   scale_y_continuous(labels = label_number(scale_cut = cut_short_scale())) +
   scale_colour_brewer(palette = "Set1") +
   theme(legend.position = "bottom") +
   labs(
-    title = "Mean bank balance over four years",
+    title = "Mean biomass over four years",
     colour = NULL
   )
 

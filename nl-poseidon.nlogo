@@ -1,4 +1,4 @@
-extensions [ csv ]                 ; needed to load Behaviorsearch results
+extensions [ profiler csv ]        ; needed to load Behaviorsearch results
 
 globals [ fishable-patches ]       ; agentset of fishable patches
 breed [ xs x ]                     ; use to mark location of protected area
@@ -71,7 +71,7 @@ end
 to update-biology
   diffuse biomass diffusion-rate
   recolor-patches
-  if ticks mod (14 * 24) = 0 [
+  if ticks mod (15 * 24) = 0 [
     ask patches [
       set biomass biomass + (
         biomass * growth-rate *
@@ -154,14 +154,16 @@ to experiment [ years ]
     set max-mpa-y max-pycor
     run-experiment years "half_mpa"
 
-    load-best "mySearchOutput"
-    run-experiment years "best_mpa"
-
     set min-mpa-x min-pxcor
     set max-mpa-x max-pxcor
     set min-mpa-y min-pycor
     set max-mpa-y max-pycor
     run-experiment years "full_mpa"
+
+    load-best "mySearchOutput"
+    run-experiment years "best_mpa"
+
+
   ]
   file-close
 
@@ -221,6 +223,17 @@ to-report expected-mean-balance [ n ]
     set balances lput mean [ bank-balance ] of fishers balances
   ]
   report mean balances
+end
+
+
+to profile
+  setup
+  profiler:start
+  repeat 365 * 24 [ go ]
+  profiler:stop
+  print profiler:report
+  csv:to-file "profiler_data.csv" profiler:data
+  profiler:reset
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -508,7 +521,7 @@ min-mpa-x
 min-mpa-x
 min-pxcor
 max-pxcor
-5.0
+-5.0
 1
 1
 NIL
@@ -523,7 +536,7 @@ max-mpa-x
 max-mpa-x
 min-pxcor
 max-pxcor
-0.0
+5.0
 1
 1
 NIL
