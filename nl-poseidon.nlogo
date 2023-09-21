@@ -65,7 +65,8 @@ to go
     ]
   ]
   update-biology
-  tick
+  tick-advance 1
+  if update-plots? [ update-plots ]
 end
 
 to update-biology
@@ -160,7 +161,7 @@ to experiment [ years ]
     set max-mpa-y max-pycor
     run-experiment years "full_mpa"
 
-    load-best "mySearchOutput"
+    load-bsearch-max "mySearchOutput"
     run-experiment years "best_mpa"
 
 
@@ -199,16 +200,23 @@ to reset-parameters
   set max-mpa-y max-pycor
 end
 
-to load-best [ prefix ]
+to load-bsearch-min [ prefix ]
+  load-bsearch prefix [ [r1 r2] -> last r1 < last r2 ]
+end
+
+to load-bsearch-max [ prefix ]
+  load-bsearch prefix [ [r1 r2] -> last r1 > last r2 ]
+end
+
+to load-bsearch [ prefix sort-criteria ]
   let rows csv:from-file word prefix ".finalCheckedBests.csv"
   let headers item 0 rows
-  let data first sort-by [ [r1 r2] ->
-    last r1 > last r2
-  ] but-first rows
+  let data first sort-by sort-criteria but-first rows
   foreach range length headers [ i ->
     if last item i headers = "*" [
       let param but-last item i headers
-      let value precision item i data 3
+      let value item i data
+      print (word "set " param " " value)
       run (word "set " param " " value)
     ]
   ]
@@ -229,7 +237,7 @@ end
 to profile
   setup
   profiler:start
-  repeat 365 * 24 [ go ]
+  repeat 365 * 24 * 4 [ go ]
   profiler:stop
   print profiler:report
   csv:to-file "profiler_data.csv" profiler:data
@@ -536,7 +544,7 @@ max-mpa-x
 max-mpa-x
 min-pxcor
 max-pxcor
-5.0
+4.0
 1
 1
 NIL
@@ -551,7 +559,7 @@ min-mpa-y
 min-mpa-y
 min-pycor
 max-pycor
--5.0
+-4.0
 1
 1
 NIL
@@ -566,7 +574,7 @@ max-mpa-y
 max-mpa-y
 min-pycor
 max-pycor
-5.0
+4.0
 1
 1
 NIL
@@ -635,6 +643,17 @@ Fleet
 12
 0.0
 1
+
+SWITCH
+304
+65
+446
+99
+update-plots?
+update-plots?
+1
+1
+-1000
 
 @#$#@#$#@
 ## WHAT IS IT?

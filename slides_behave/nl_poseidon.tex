@@ -409,6 +409,22 @@ end
   %\end{adjustbox}
 \end{frame}
 
+\begin{frame}[fragile=singleslide]{Figuring out the bottlenecks in our model}
+  \begin{adjustbox}{max height=0.8\textheight, max width = \linewidth}
+    \begin{minted}{nlogo}  
+to profile
+  setup                                          
+  profiler:start                                 
+  repeat 365 * 24 * 4 [ go ]                      
+  profiler:stop     
+  print profiler:report         
+  csv:to-file "profiler_data.csv" profiler:data  
+  profiler:reset                                 
+end
+    \end{minted}
+  \end{adjustbox}
+\end{frame}
+
 \begin{frame}{Scenario}
   \vfill
   We have observed the real-world fishery for one year.
@@ -475,20 +491,3 @@ end
   \hfill
   \includegraphics[width=0.49\linewidth]{images/experiment_biomass.pdf}
 \end{frame}
-
-\begin{frame}[fragile=singleslide]{Figuring out the bottlenecks in our model}
-  \begin{adjustbox}{max height=0.8\textheight, max width = \linewidth}
-    \begin{minted}{nlogo}  
-to profile
-  setup                                          
-  profiler:start                                 
-  repeat 365 * 24 * 4 [ go ]                      
-  profiler:stop     
-  print profiler:report         
-  csv:to-file "profiler_data.csv" profiler:data  
-  profiler:reset                                 
-end
-    \end{minted}
-  \end{adjustbox}
-\end{frame}
-\end{document}
