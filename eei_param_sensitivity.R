@@ -63,7 +63,7 @@ df_experiment <-
     balance = mean(mean_bank_balance_of_fishers),
     biomass = mean(biomass)
   ) %>%
-  mutate(year = ticks  / (365 * 24))
+  mutate(year = ticks / (365 * 24))
 
 df_experiment %>%
   ggplot(aes(year, balance, colour = experiment, fill = experiment)) +
@@ -92,3 +92,18 @@ df_experiment %>%
   )
 
 ggsave(here("slides_behave", "images", "experiment_biomass.pdf"), width = 4, height = 3)
+
+df_experiment %>%
+  filter(ticks == max(ticks)) %>%
+  ggplot(aes(balance, biomass, colour = experiment, fill = experiment)) +
+  geom_point(size = 3, alpha = 0.75) +
+  ggrepel::geom_text_repel(aes(label = experiment), colour = "black", family = "Foundry Sterling") +
+  scale_x_continuous(labels = label_number(scale_cut = cut_short_scale())) +
+  scale_y_continuous(labels = label_number(scale_cut = cut_short_scale())) +
+  scale_colour_brewer(palette = "Set1") +
+  scale_fill_brewer(palette = "Set1") +
+  theme_minimal(base_family = "Foundry Sterling") +
+  labs(title = "Balance vs. biomass after four years") +
+  theme(legend.position = "none")
+
+ggsave(here("slides_behave", "images", "experiment_xy.pdf"), width = 4, height = 3)

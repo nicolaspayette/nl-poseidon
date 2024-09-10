@@ -26,6 +26,8 @@ to setup
     set color lime
     set shape "house"
   ]
+  ; at first, all patches are fisheable; it will be
+  ; different once we add a protected area
   set fishable-patches patches
   ask patches [ set biomass carrying-capacity / 2 ]
   recolor-patches
@@ -134,7 +136,7 @@ end
 
 to recolor-patches
   ask patches [
-    set pcolor scale-color blue (biomass / 2) carrying-capacity 0
+    set pcolor scale-color blue biomass (carrying-capacity * 2) 0
   ]
 end
 
@@ -212,11 +214,10 @@ to load-bsearch [ prefix sort-criteria ]
   let rows csv:from-file word prefix ".finalCheckedBests.csv"
   let headers item 0 rows
   let data first sort-by sort-criteria but-first rows
-  foreach range length headers [ i ->
-    if last item i headers = "*" [
-      let param but-last item i headers
-      let value item i data
-      print (word "set " param " " value)
+  foreach range length headers [ index ->
+    if last item index headers = "*" [
+      let param but-last item index headers
+      let value precision item index data 3
       run (word "set " param " " value)
     ]
   ]
@@ -327,7 +328,7 @@ exploration-probability
 exploration-probability
 0
 1
-0.03
+0.021
 0.01
 1
 NIL
@@ -471,7 +472,7 @@ exploration-radius
 exploration-radius
 0
 world-width
-10.93
+10.578
 0.01
 1
 NIL
@@ -529,7 +530,7 @@ min-mpa-x
 min-mpa-x
 min-pxcor
 max-pxcor
--5.0
+5.0
 1
 1
 NIL
@@ -544,7 +545,7 @@ max-mpa-x
 max-mpa-x
 min-pxcor
 max-pxcor
-4.0
+0.0
 1
 1
 NIL
@@ -559,7 +560,7 @@ min-mpa-y
 min-mpa-y
 min-pycor
 max-pycor
--4.0
+-5.0
 1
 1
 NIL
@@ -574,7 +575,7 @@ max-mpa-y
 max-mpa-y
 min-pycor
 max-pycor
-4.0
+5.0
 1
 1
 NIL
@@ -648,10 +649,10 @@ SWITCH
 304
 65
 446
-99
+98
 update-plots?
 update-plots?
-1
+0
 1
 -1000
 
@@ -1013,7 +1014,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.3.0
+NetLogo 6.4.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
