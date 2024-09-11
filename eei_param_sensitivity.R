@@ -63,7 +63,15 @@ df_experiment <-
     balance = mean(mean_bank_balance_of_fishers),
     biomass = mean(biomass)
   ) %>%
-  mutate(year = ticks / (365 * 24))
+  mutate(
+    year = ticks / (365 * 24),
+    experiment = experiment %>% case_match(
+      "full_mpa" ~ "Full MPA",
+      "half_mpa" ~ "Half MPA",
+      "best_mpa" ~ "Best MPA",
+      "no_mpa" ~ "No MPA"
+    )
+  )
 
 df_experiment %>%
   ggplot(aes(year, balance, colour = experiment, fill = experiment)) +

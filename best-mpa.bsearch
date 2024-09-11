@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<!DOCTYPE search SYSTEM "behaviorsearch.dtd">
+<search>
+    <bsearchVersionNumber>1.10</bsearchVersionNumber>
+    <modelInfo>
+        <modelFile>/home/nicolas/workspace/nl-poseidon/nl-poseidon.nlogo</modelFile>
+        <modelSetupCommands>setup</modelSetupCommands>
+        <modelStepCommands>go</modelStepCommands>
+        <modelStopCondition/>
+        <modelStepLimit>35040</modelStepLimit>
+        <modelMetricReporter>mean [bank-balance] of fishers</modelMetricReporter>
+        <modelMeasureIf>true</modelMeasureIf>
+    </modelInfo>
+    <fitnessInfo>
+        <fitnessMinimized>false</fitnessMinimized>
+        <fitnessCollecting>AT_FINAL_STEP</fitnessCollecting>
+        <fitnessSamplingReplications>4</fitnessSamplingReplications>
+        <fitnessCombineReplications>MEAN</fitnessCombineReplications>
+    </fitnessInfo>
+    <searchSpace>
+        <paramSpec>["carrying-capacity" 4000]</paramSpec>
+        <paramSpec>["number-of-fishers" 25]</paramSpec>
+        <paramSpec>["exploration-probability" 0.021]</paramSpec>
+        <paramSpec>["price-of-fish" 80]</paramSpec>
+        <paramSpec>["hourly-costs" 50]</paramSpec>
+        <paramSpec>["speed" 0.5]</paramSpec>
+        <paramSpec>["catchability" 0.2]</paramSpec>
+        <paramSpec>["diffusion-rate" 0.002]</paramSpec>
+        <paramSpec>["exploration-radius" 10.578]</paramSpec>
+        <paramSpec>["growth-rate" 0.1]</paramSpec>
+        <paramSpec>["min-mpa-x" [-5 1 5]]</paramSpec>
+        <paramSpec>["max-mpa-x" [-5 1 5]]</paramSpec>
+        <paramSpec>["min-mpa-y" [-5 1 5]]</paramSpec>
+        <paramSpec>["max-mpa-y" [-5 1 5]]</paramSpec>
+        <paramSpec>["update-plots?" false]</paramSpec>
+    </searchSpace>
+    <searchMethod type="StandardGA">
+        <searchMethodParameter name="mutation-rate" value="0.01"/>
+        <searchMethodParameter name="population-size" value="50"/>
+        <searchMethodParameter name="tournament-size" value="3"/>
+        <searchMethodParameter name="population-model" value="generational"/>
+        <searchMethodParameter name="crossover-rate" value="0.7"/>
+    </searchMethod>
+    <chromosomeRepresentation type="GrayBinaryChromosome"/>
+    <caching>false</caching>
+    <evaluationLimit>1000</evaluationLimit>
+    <bestCheckingNumReplications>8</bestCheckingNumReplications>
+</search>

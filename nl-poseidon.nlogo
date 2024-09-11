@@ -144,7 +144,8 @@ to experiment [ years ]
   if file-exists? "experiment.csv" [ file-delete "experiment.csv" ]
   file-open "experiment.csv"
   file-print csv:to-row (list "experiment" "ticks" "mean_bank_balance_of_fishers" "biomass")
-  repeat 10 [
+  foreach range 10 [ i ->
+    print i
     set min-mpa-x max-pxcor
     set max-mpa-x 0
     set min-mpa-y min-pycor
@@ -163,9 +164,8 @@ to experiment [ years ]
     set max-mpa-y max-pycor
     run-experiment years "full_mpa"
 
-    load-bsearch-max "mySearchOutput"
+    load-bsearch-max "best-mpa"
     run-experiment years "best_mpa"
-
 
   ]
   file-close
@@ -173,6 +173,7 @@ to experiment [ years ]
 end
 
 to run-experiment [ years name ]
+  print name
   setup
   repeat years * 365 * 24 [
     go
@@ -217,7 +218,7 @@ to load-bsearch [ prefix sort-criteria ]
   foreach range length headers [ index ->
     if last item index headers = "*" [
       let param but-last item index headers
-      let value precision item index data 3
+      let value item index data
       run (word "set " param " " value)
     ]
   ]
@@ -243,6 +244,20 @@ to profile
   print profiler:report
   csv:to-file "profiler_data.csv" profiler:data
   profiler:reset
+end
+
+to check-goodness-of-fit
+  reset-parameters
+  load-bsearch-min "fit-eei"
+  let balances [["balance"]]
+  foreach range 500 [ i ->
+    print word "Run " i
+    setup
+    repeat 365 * 24 [ go ]
+    let result mean [ bank-balance ] of fishers
+    set balances lput (list result) balances
+  ]
+  csv:to-file "goodness-of-fit.csv" balances
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -530,7 +545,7 @@ min-mpa-x
 min-mpa-x
 min-pxcor
 max-pxcor
-5.0
+-5.0
 1
 1
 NIL
@@ -652,7 +667,7 @@ SWITCH
 98
 update-plots?
 update-plots?
-0
+1
 1
 -1000
 

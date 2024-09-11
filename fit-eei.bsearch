@@ -8,39 +8,25 @@
         <modelStepCommands>go</modelStepCommands>
         <modelStopCondition/>
         <modelStepLimit>8760</modelStepLimit>
-        <modelMetricReporter>775000 - mean [bank-balance] of fishers) ^ 2</modelMetricReporter>
+        <modelMetricReporter>abs (775000 - mean [bank-balance] of fishers)</modelMetricReporter>
         <modelMeasureIf>true</modelMeasureIf>
     </modelInfo>
     <fitnessInfo>
         <fitnessMinimized>true</fitnessMinimized>
         <fitnessCollecting>AT_FINAL_STEP</fitnessCollecting>
-        <fitnessSamplingReplications>10</fitnessSamplingReplications>
+        <fitnessSamplingReplications>4</fitnessSamplingReplications>
         <fitnessCombineReplications>MEAN</fitnessCombineReplications>
     </fitnessInfo>
     <searchSpace>
-        <paramSpec>["carrying-capacity" [0 100 10000]]</paramSpec>
-        <paramSpec>["number-of-fishers" [2 1 1000]]</paramSpec>
-        <paramSpec>["exploration-probability" [0 0.01 1]]</paramSpec>
-        <paramSpec>["price-of-fish" [0 1 500]]</paramSpec>
-        <paramSpec>["hourly-costs" [0 10 1000]]</paramSpec>
-        <paramSpec>["speed" [0 0.1 1]]</paramSpec>
-        <paramSpec>["catchability" [0 0.01 1]]</paramSpec>
-        <paramSpec>["diffusion-rate" [0 0.001 0.01]]</paramSpec>
-        <paramSpec>["exploration-radius" 2]</paramSpec>
-        <paramSpec>["growth-rate" [0 0.01 1]]</paramSpec>
-        <paramSpec>["min-mpa-x" 5]</paramSpec>
-        <paramSpec>["max-mpa-x" 0]</paramSpec>
-        <paramSpec>["min-mpa-y" -5]</paramSpec>
-        <paramSpec>["max-mpa-y" 5]</paramSpec>
+        <paramSpec>["exploration-probability" [0 "C" 1]]</paramSpec>
+        <paramSpec>["exploration-radius" [1 "C" 11]]</paramSpec>
     </searchSpace>
-    <searchMethod type="SimulatedAnnealing">
-        <searchMethodParameter name="initial-temperature" value="1.0"/>
+    <searchMethod type="MutationHillClimber">
         <searchMethodParameter name="mutation-rate" value="0.05"/>
-        <searchMethodParameter name="temperature-change-factor" value="0.99"/>
         <searchMethodParameter name="restart-after-stall-count" value="0"/>
     </searchMethod>
     <chromosomeRepresentation type="GrayBinaryChromosome"/>
-    <caching>true</caching>
+    <caching>false</caching>
     <evaluationLimit>300</evaluationLimit>
-    <bestCheckingNumReplications>0</bestCheckingNumReplications>
+    <bestCheckingNumReplications>8</bestCheckingNumReplications>
 </search>
