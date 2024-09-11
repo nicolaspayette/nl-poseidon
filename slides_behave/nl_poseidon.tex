@@ -35,6 +35,7 @@
 
 \usetheme{default}
 \beamertemplatenavigationsymbolsempty
+\setbeamerfont{footnote}{size=\tiny}
 
 \usepackage{changepage}
 
@@ -68,7 +69,7 @@
 \usepackage{textpos}
 
 \title{\LARGE ABM and environmental policy}
-\subtitle{A mini-Poseidon model in NetLogo}
+\subtitle{A mini-POSEIDON model in NetLogo}
 
 \date{\scriptsize Behave Summer School\\Brescia, Italy\\\today}
 \author{\Large Nicolas Payette}
@@ -86,8 +87,9 @@
   \large
   \begin{itemize}
     \addtolength{\itemsep}{1ex}
-    \item A little bit about the \hl{Poseidon} fisheries ABM
-    \item A whole lot about building \hl{Poseidon} in \hl{NetLogo}!
+    \item A little bit about the POSEIDON\footnote{\textbf{P}rocess-based \textbf{O}cean-system \textbf{S}imulator for \textbf{E}volving \textbf{I}ntegrated \textbf{D}omains and \textbf{O}perational \textbf{N}eeds. \quad\ldots\quad Yeah. I know.} fisheries ABM
+    \item A lot about \hl{building} a simple NetLogo version of it.
+    \item A fair bit about \hl{calibrating} the model\\and using it for \hl{optimizing} a policy.
   \end{itemize}
 \end{frame}
 
@@ -120,19 +122,19 @@
 \begin{frame}
   \begin{columns}[T]
     \begin{column}{0.35\textwidth}
-      \Large\hl{Poseidon}
+      \Large\hl{POSEIDON}
       \vskip 1ex
-      \includegraphics[width=\linewidth]{images/0036MAN_Poseidon}
+      \includegraphics[width=\linewidth]{images/0036MAN_POSEIDON}
       \tiny Source: Ricardo André Frantz, \url{https://w.wiki/wzx}
     \end{column}
     \begin{column}{0.65\textwidth}
       \hfill
-      \includegraphics[height=0.95\textheight]{images/poseidon_diagram.pdf}
+      \includegraphics[height=0.95\textheight]{images/POSEIDON_diagram.pdf}
     \end{column}    
   \end{columns}
 \end{frame}
 
-\begin{frame}[t]\frametitle{Poseidon applications}
+\begin{frame}[t]\frametitle{POSEIDON applications}
   \begin{columns}[T]
     \begin{column}{0.575\textwidth}
       \footnotesize
@@ -147,14 +149,14 @@
       \includegraphics[width=\linewidth]{images/Design-Partners.png}
     \end{column}
     \begin{column}{0.425\textwidth}
-      \includegraphics[width=\linewidth]{images/poseidon_screenshot.png}
+      \includegraphics[width=\linewidth]{images/POSEIDON_screenshot.png}
     \end{column}
   \end{columns}
 \end{frame}
 
 
 \begin{frame}[t]\frametitle{What can we put in a minimal fisheries model?}
-  \Large
+  \large
   \vfill
   \begin{columns}[T]
     \begin{column}{0.3\textwidth}
@@ -173,12 +175,12 @@
   \vfill
       \hl{Some policy to test:}
       \begin{itemize}
-        \item The size of a marine protected area (MPA)
+        \item Where to place a marine protected area (MPA)
       \end{itemize}
 \end{frame}
 
 \begin{frame}[t]
-  \Large Fisher agents in Poseidon use the\\\hl{``Explore, exploit, imitate''}\\behaviour algorithm:
+  \Large Fisher agents in POSEIDON use the\\\hl{``Explore, exploit, imitate''}\\behaviour algorithm:
   \vfill
   \begin{tcolorbox}[halign=flush left]
   \begin{itemize}\small
@@ -208,7 +210,6 @@
       \tiny Pierre-François Verhulst (1804--1849).\\Source: \url{https://w.wiki/x2o}.
     \end{column}
   \end{columns}
-
 \end{frame}
 
 \begin{frame}[fragile=singleslide]{Get the model skeleton from GitHub}
