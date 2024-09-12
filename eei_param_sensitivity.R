@@ -104,7 +104,7 @@ ggsave(here("slides_behave", "images", "experiment_biomass.pdf"), width = 4, hei
 df_experiment %>%
   filter(ticks == max(ticks)) %>%
   ggplot(aes(balance, biomass, colour = experiment, fill = experiment)) +
-  geom_point(size = 3, alpha = 0.75) +
+  geom_point(shape = 21, size = 3, alpha = 0.75, colour = "black") +
   ggrepel::geom_text_repel(aes(label = experiment), colour = "black", family = "Foundry Sterling") +
   scale_x_continuous(labels = label_number(scale_cut = cut_short_scale())) +
   scale_y_continuous(labels = label_number(scale_cut = cut_short_scale())) +
